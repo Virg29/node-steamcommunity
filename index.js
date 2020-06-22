@@ -191,7 +191,9 @@ SteamCommunity.prototype.login = function(details, callback) {
 				var steamguard = null;
 				for(var i = 0; i < cookies.length; i++) {
 					var parts = cookies[i].split('=');
-					if(parts[0] == 'steamMachineAuth' + self.steamID) {
+					var checkPrepared = parts[0].match(/(\D*)(\S*)/);
+					if(checkPrepared[1] == 'steamMachineAuth') {
+						self.steamID = parseInt(checkPrepared[2]);
 						steamguard = self.steamID.toString() + '||' + decodeURIComponent(parts[1]);
 						break;
 					}
